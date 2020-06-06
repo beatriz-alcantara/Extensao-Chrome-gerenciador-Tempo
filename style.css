@@ -1,0 +1,13 @@
+body {
+    background-color: #2d353c;
+}
+.principal {
+    width: 500px;
+    height: 500px;
+}
+
+#grafico {
+    width: 200px;
+    height: 200px;
+    background-color: aqua;
+}
