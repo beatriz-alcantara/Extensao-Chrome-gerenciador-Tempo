@@ -2,6 +2,7 @@ body {
     background-color: #2d353c;
 }
 .principal {
+    color: azure;
     width: 500px;
     height: 500px;
 }

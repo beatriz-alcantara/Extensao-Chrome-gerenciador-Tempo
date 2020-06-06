@@ -12,24 +12,9 @@ chrome.tabs.onRemoved.addListener(tabFechada)
 function tabFechada (tabId) {
    for (tab of myTabs) {
        if (tab.tabId === tabId) {
-            let horaFim = Date.now()
-            let tempo = horaFim - tab.horaInicio
-            let itemNavegacao = {
-                tabId: tab.tabId,
-                tempo: tempo,
-                site: tab.site,
-                titulo: tab.titulo
-            }
            hasInLocalStorage(tab)
        }
    }
-   console.log('minhas tabs => ', myTabs)
-}
-
-chrome.tabs.onActivated.addListener(tabAberta)
-
-function tabAberta (tab) {
-    console.log('tab sendo vista => ', tab)
 }
 
 chrome.tabs.onUpdated.addListener(tabAtualizada)
@@ -64,12 +49,10 @@ function tabAtualizada(tabId, changeInfo, tab) {
         } else {
             myTabs.add(tabItem)
         }
-        console.log('mytabs => ', myTabs)
     }
 }
 
 function hasInLocalStorage (tab) {
-    console.log('em hasInLocalStorage')
     let siteNoLocalStorage = 0
     let dadosNavegacao = localStorage.getItem('dados_navegacao')
     dadosNavegacao = (typeof dadosNavegacao) === 'string' ? JSON.parse(dadosNavegacao) : []
@@ -87,28 +70,25 @@ function hasInLocalStorage (tab) {
         }
         if (siteNoLocalStorage == 0) {
             console.log('no else')
-            let horaFim = Date.now()
-            let tempo = horaFim - tab.horaInicio
-            let itemNavegacao = {   // Tem que ser tab pq é um item de myTabs
-                tabId: tab.tabId,
-                tempo: tempo,
-                site: tab.site,
-                titulo: tab.titulo
-            }
+            let itemNavegacao = setDadoNavegacao(tab)
             dadosNavegacao.push(itemNavegacao)
             localStorage.setItem('dados_navegacao', JSON.stringify(dadosNavegacao))
         }
     } else {
-        let horaFim = Date.now()
-        let tempo = horaFim - tab.horaInicio
-        let itemNavegacao = {   // Tem que ser tab pq é um item de myTabs
-            tabId: tab.tabId,
-            tempo: tempo,
-            site: tab.site,
-            titulo: tab.titulo
-        }
+        let itemNavegacao = setDadoNavegacao(tab)
         dadosNavegacao.push(itemNavegacao)
         localStorage.setItem('dados_navegacao', JSON.stringify(dadosNavegacao))
     }
     myTabs.delete(tab)
+}
+
+function setDadoNavegacao (tab) {
+    let horaFim = Date.now()
+    let tempo = horaFim - tab.horaInicio
+    return {
+        tabId: tab.tabId,
+        tempo: tempo,
+        site: tab.site,
+        titulo: tab.titulo
+    }
 }
