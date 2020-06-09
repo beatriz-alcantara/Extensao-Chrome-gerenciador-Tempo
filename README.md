@@ -1,0 +1,1 @@
+#Extensão para monitoramento do tempo passado em sites (Google Chrome)

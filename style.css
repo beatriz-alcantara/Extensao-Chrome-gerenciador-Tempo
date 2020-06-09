@@ -1,14 +1,9 @@
 body {
+    position: relative;
     background-color: #2d353c;
+    /* width: 1000px; */
+    height: 200px;
 }
 .principal {
     color: azure;
-    width: 500px;
-    height: 500px;
-}
-
-#grafico {
-    width: 200px;
-    height: 200px;
-    background-color: aqua;
 }
