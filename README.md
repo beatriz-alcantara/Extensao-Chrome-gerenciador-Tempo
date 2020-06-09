@@ -24,7 +24,7 @@
  ```json
  {
     "manifest_version": 2,
-    "name": "Extensão de Testes",
+    "name": "Monitor de sites",
     "version": "0.0.1",
     "content_scripts": [
         {
@@ -35,13 +35,14 @@
     ],
     "background": {
         "scripts": ["background.js"],
-        "persistent": false
     },
     "permissions": [
         "tabs"
     ],
     "browser_action": {
-        "default_popup": "index.html"
+        "default_popup": "index.html",
+        "default_icon": "work.png",
+        "title": "Monitor de sites"
       }
 }
  ```
@@ -49,8 +50,23 @@
  
 - A propriedade *background* é onde definimos o nosso script principal que mantém todo o gerenciamento de tempo em cada aba.
 - A propriedade *permissions* serve para nos dar acesso a APIs que iremos utilizar na nossa extensão
-- A propriedade *browser_action* define como o icone da nossa extensão será mostrado para o usuário e também qual conteúdo será apresentado para ele quando clicar em nossa extensão
+- A propriedade *browser_action* define como o icone da nossa extensão será mostrado no canto superior direito do navegador e também qual conteúdo será apresentado para o usuário quando clicado.
 
+### Arquivo background.js
 
+Aqui temos acesso a API do **chrome**. Nele vamos "escutar" o objeto tabs, quando ele for atualizado e quando for fechado.
 
+``` javascript
+chrome.tabs.onUpdated.addListener(tabAtualizada)
+
+chrome.tabs.onRemoved.addListener(tabFechada)
+
+```
+
+A função de callback **tabAtualizada** recebe três parâmetros de entrada *tabId, changeInfo, tab* onde:
+- *tabId* é o id da tab atualizada
+- *changeInfo* contém informações sobre o status da aba (se ela ja acabou de recarregar ou está em processo de carregamento)
+- Objeto *tab* que traz algumas informações referentes ao conteúdo carregado na aba.
+
+Já a função de callback **tabFechada** traz apenas o id da aba fechada.
 
