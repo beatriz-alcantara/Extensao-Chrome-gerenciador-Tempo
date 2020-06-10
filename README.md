@@ -70,3 +70,5 @@ A função de callback **tabAtualizada** recebe três parâmetros de entrada *ta
 
 Já a função de callback **tabFechada** traz apenas o id da aba fechada.
 
+Na função **tabAtualizada** é preciso verificar se o status da página está como "complete" (se ela carregou) e também se a url da aba é diferente de "chrome://" pois o tempo em páginas referentes ao navegador não nos é interessante.
+E então verificamos se a variável 
