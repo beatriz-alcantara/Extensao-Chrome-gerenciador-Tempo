@@ -35,14 +35,13 @@ let coresBordaPadrao = [
     'rgba(255, 159, 64, 1)'
 ]
 for(dado of dadosNavegacao) {
-    let label = dado.titulo.length > 8 ? dado.titulo.match('/\D{8}/') : dado.titulo
     sites.push(dado.titulo)
     let temp = dado.tempo / 60000
     temp = temp.toFixed(2)
     tempo.push(temp)
 }
 
-if (sites.length > cores.length) {
+for (let i = 0; i <= Math.ceil(sites.length/6); i++) {
     cores = [...cores, ...coresPadrao]
     coresBorda = [...coresBorda, ...coresBordaPadrao]
 }

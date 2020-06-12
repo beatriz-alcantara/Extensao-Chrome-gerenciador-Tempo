@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "name": "Extensão de Testes",
+    "name": "Monitor de sites",
     "version": "0.0.1",
     "content_scripts": [
         {
@@ -11,13 +11,14 @@
         }
     ],
     "background": {
-        "scripts": ["background.js"],
-        "persistent": false
+        "scripts": ["background.js"]
     },
     "permissions": [
         "tabs"
     ],
     "browser_action": {
-        "default_popup": "index.html"
+        "default_popup": "index.html",
+        "default_icon": "work.png",
+        "title": "Monitor de sites"
       }
 }
