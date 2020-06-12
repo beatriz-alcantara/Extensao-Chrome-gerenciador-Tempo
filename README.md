@@ -1,6 +1,8 @@
-# Extensão para monitoramento do tempo passado em sites (Google Chrome)
+# Extensão para contabilizar o tempo passado em páginas Web (Google Chrome)
 
-- O intuito deste tutorial é incentivar você que é iniciante e que está sem ideias para criar projetos e exercitar seus conhecimentos em Javascript.
+- O intuito deste tutorial é incentivar você que é iniciante, e que está sem ideias para criar projetos, a exercitar seus conhecimentos em Javascript. :blue_heart:
+
+Obs.: Recomendo que você visite as documentações das tecnologias usadas.
 
 ## Resultado da extensão
 
@@ -16,7 +18,7 @@
  
  ## Explicando a ideia da extensão
  
- A ideia é criar uma extensão para o google chrome visando contabilizar quanto tempo um site fica aberto em nossos navegadores. Vamos partir do princípio que o tempo passado em uma página Web deve ser contabilizado desde o momento em que ele é carregado/inicializado até o momento que mudamos para outro site  dentro da mesma aba ou a fechamos.
+ A ideia é criar uma extensão para o Google Chrome visando contabilizar quanto tempo uma página Web (site) fica aberta em nossos navegadores. Vamos partir do princípio que o tempo passado em uma página Web deve ser contabilizado desde o momento em que ela é carregada/inicializada até o momento que mudamos para outro site dentro da mesma aba ou a fechamos.
  
  ## O Código
  
@@ -47,7 +49,7 @@
       }
 }
  ```
- Vou tentar explicar algumas propriedades desse arquivo que acho relevante saber para esse projeto. (Se quiser saber mais sobre o `manifest.json` acesse a [documentação do google](https://developer.chrome.com/extensions/manifest))
+ Irei explicar algumas propriedades desse arquivo que acho relevante saber para esse projeto. (Se quiser saber mais sobre o `manifest.json` acesse a [documentação do google](https://developer.chrome.com/extensions/manifest))
  
 - A propriedade *background* é onde definimos o nosso script principal que mantém todo o gerenciamento de tempo em cada aba.
 - A propriedade *permissions* serve para nos dar acesso a APIs que iremos utilizar na nossa extensão
@@ -55,7 +57,7 @@
 
 ### Arquivo background.js
 
-Aqui temos acesso a API do **chrome**. Nele vamos "escutar" o objeto tabs, quando ele for atualizado e quando for fechado.
+Aqui temos acesso à API do **chrome**. Nele vamos "escutar" o objeto tabs, quando ele for atualizado e quando for fechado.
 
 ``` javascript
 chrome.tabs.onUpdated.addListener(tabAtualizada)
@@ -66,7 +68,7 @@ chrome.tabs.onRemoved.addListener(tabFechada)
 
 A função de callback **tabAtualizada** recebe três parâmetros de entrada *tabId, changeInfo, tab* onde:
 - *tabId* é o id da tab atualizada
-- *changeInfo* contém informações sobre o status da aba (se ela ja acabou de recarregar ou está em processo de carregamento)
+- *changeInfo* contém informações sobre o status da aba (se ela ja carregou ou se está carregando)
 - Objeto *tab* que traz algumas informações referentes ao conteúdo carregado na aba.
 
 Já a função de callback **tabFechada** traz apenas o id da aba fechada.
@@ -76,11 +78,11 @@ Para melhorar a visualização do algoritmo observe este fluxograma:
 
 ![abrir aba](imagens/fluxograma-extensao.png)
 
-Já na função **tabFechada** segui esta linha de pensamento:
+Já na função **tabFechada** seguiremos esta linha de pensamento:
 
 ![abrir aba](imagens/fluxograma-fecharAba.png)
 
-Todo o tempo passado nos sites é guardado em um array no localStorage. Quando vamos no arquivo `principal.js` recuperamos essas informações do localStorage precisamos:
+Todo o tempo passado nos sites é guardado em um array no localStorage. Quando vamos no arquivo `principal.js` e recuperamos essas informações do localStorage, é preciso:
 
 - Criar um array com o nome dos sites acessados
 
@@ -102,7 +104,7 @@ for (let i = 0; i <= Math.ceil(sites.length/6); i++) {
 }
 ```
 
-- Criar o gráficos
+- Criar o gráfico
 
 ```javascript
 Chart.Bar('myChart', {
@@ -136,5 +138,5 @@ Chart.Bar('myChart', {
 })
 ```
 
-
-
+Espero que este tutorial tenha incentivado e ajudado você a criar uma extensão para o Google Chrome. 
+:kissing_heart: .. :rainbow:
