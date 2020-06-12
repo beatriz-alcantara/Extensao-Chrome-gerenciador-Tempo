@@ -1,5 +1,7 @@
 # Extensão para monitoramento do tempo passado em sites (Google Chrome)
 
+- O intuito deste tutorial é incentivar você que é iniciante e que está sem ideias para criar projetos e exercitar seus conhecimentos em Javascript.
+
 ## Resultado da extensão
 
 <img src="/imagens/demonstracao-1.png" width="500px" height="300px"/>
@@ -14,8 +16,7 @@
  
  ## Explicando a ideia da extensão
  
- A ideia é criar uma extensão para o google chrome visando contabilizar quanto tempo um site fica aberto em nossos navegadores
- . Parti do princípio que o tempo passado em uma página Web deve ser contabilizado desde o momento em que ele é carregado/inicializado até o momento que mudamos para outro site  dentro da mesma aba ou a fechamos.
+ A ideia é criar uma extensão para o google chrome visando contabilizar quanto tempo um site fica aberto em nossos navegadores. Vamos partir do princípio que o tempo passado em uma página Web deve ser contabilizado desde o momento em que ele é carregado/inicializado até o momento que mudamos para outro site  dentro da mesma aba ou a fechamos.
  
  ## O Código
  
@@ -71,4 +72,69 @@ A função de callback **tabAtualizada** recebe três parâmetros de entrada *ta
 Já a função de callback **tabFechada** traz apenas o id da aba fechada.
 
 Na função **tabAtualizada** é preciso verificar se o status da página está como "complete" (se ela carregou) e também se a url da aba é diferente de "chrome://" pois o tempo em páginas referentes ao navegador não nos é interessante.
-E então verificamos se a variável 
+Para melhorar a visualização do algoritmo observe este fluxograma:
+
+![abrir aba](imagens/fluxograma-extensao.png)
+
+Já na função **tabFechada** segui esta linha de pensamento:
+
+![abrir aba](imagens/fluxograma-fecharAba.png)
+
+Todo o tempo passado nos sites é guardado em um array no localStorage. Quando vamos no arquivo `principal.js` recuperamos essas informações do localStorage precisamos:
+
+- Criar um array com o nome dos sites acessados
+
+```javascript
+for(dado of dadosNavegacao) {
+    sites.push(dado.titulo)
+    let temp = dado.tempo / 60000
+    temp = temp.toFixed(2)
+    tempo.push(temp)
+}
+```
+
+- Criar um array de cores de acordo com a quantidade de sites armazenados
+
+```javascript
+for (let i = 0; i <= Math.ceil(sites.length/6); i++) {
+    cores = [...cores, ...coresPadrao]
+    coresBorda = [...coresBorda, ...coresBordaPadrao]
+}
+```
+
+- Criar o gráficos
+
+```javascript
+Chart.Bar('myChart', {
+    data: {
+        labels: sites,
+        datasets: [{
+            label: 'Tempo nos Sites (em minutos)',
+            data: tempo,
+            backgroundColor: cores,
+            borderColor: coresBorda,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        tooltips: {},
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    display: false,
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+})
+```
+
+
+
